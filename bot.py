@@ -1,4 +1,5 @@
 import discord
+import pandas as pd
 from matching import point_mirage, point_cache, match_mirage, match_cache
 from token_data import token_data_str
 
@@ -45,14 +46,30 @@ async def on_message(message):
             hito = message.content.split()[1]
             hitoset = set(hito.split(","))
 
-            if not hitoset <= allhito:
-                error = "エラー：メンバーがおかしいです　入力にミスがあるかも"
+            # if not hitoset <= allhito:
+            #     error = "エラー：メンバーがおかしいです　入力にミスがあるかも"
 
             cache = match_cache(hitoset)
             mirage = match_mirage(hitoset)
 
-            await client.send_message(message.channel, error)
+            # await client.send_message(message.channel, error)
             await client.send_message(message.channel, cache)
             await client.send_message(message.channel, mirage)
+
+    if message.content.startswith("!set"):
+        if client.user != message.author:
+            split = message.content.split()
+            point = split[3].split(",")
+
+            df = pd.read_csv("point_"+ split[2] +".csv", index_col=0)
+
+            df.at[split[1],"A"] = point[0]
+            df.at[split[1],"MID"] = point[1]
+            df.at[split[1],"B"] = point[2]
+
+            print(df)
+
+            df.to_csv("point_"+ split[2] +".csv", encoding='utf-8')
+
 
 client.run(token_data_str)
