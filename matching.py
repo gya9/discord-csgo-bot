@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 allhito = {
     "arch",
     "darknist",
@@ -19,19 +18,6 @@ point_cache = {
     "toka":[1,1,3],
     "yukiya":[2,0,3],
     "bekutoru":[1,2,1],
-=======
-allhito = {"arch", "darknist", "3ple", "gya9", "keshigomu", "toka", "yukiya", "bekutoru"}
-
-point_cache = {
-    "arch":[1,3,1],\
-    "darknist":[5,0,0],\
-    "3ple":[0,0,5],\
-    "gya9":[1,1,1],\
-    "keshigomu":[4,1,0],\
-    "toka":[1,1,3],\
-    "yukiya":[2,0,3],\
-    "bekutoru":[1,1,1],\
->>>>>>> origin/master
     }
 
 point_mirage = {
@@ -42,11 +28,7 @@ point_mirage = {
     "keshigomu":[0,0,5],\
     "toka":[3,0,2],\
     "yukiya":[0,2,3],\
-<<<<<<< HEAD
     "bekutoru":[1,2,2],\
-=======
-    "bekutoru":[3,2,0],\
->>>>>>> origin/master
     }
 
 def match_mirage(S):
