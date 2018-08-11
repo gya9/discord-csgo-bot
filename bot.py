@@ -11,7 +11,16 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
-allhito = {"arch", "darknist", "3ple", "gya9", "keshigomu", "toka", "yukiya", "bekutoru"}
+allhito = {
+    "arch",
+    "darknist",
+    "3ple",
+    "gya9",
+    "keshigomu",
+    "toka",
+    "yukiya",
+    "bekutoru"
+    }
 
 @client.event
 async def on_message(message):
@@ -33,16 +42,16 @@ async def on_message(message):
 
     if message.content.startswith("!match"):
         if client.user != message.author:
-            hito = message.content[7:]
+            hito = message.content.split()[1]
             hitoset = set(hito.split(","))
 
-            # if not hitoset <= allhito:
-                # error = "エラー：メンバーがおかしいです　入力にミスがあるかも"
+            if not hitoset <= allhito:
+                error = "エラー：メンバーがおかしいです　入力にミスがあるかも"
 
             cache = match_cache(hitoset)
             mirage = match_mirage(hitoset)
 
-            # await client.send_message(message.channel, error)
+            await client.send_message(message.channel, error)
             await client.send_message(message.channel, cache)
             await client.send_message(message.channel, mirage)
 
