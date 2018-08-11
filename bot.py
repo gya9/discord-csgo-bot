@@ -37,38 +37,49 @@ async def on_message(message):
     if message.content.startswith("!help"):
         if client.user != message.author:
             m1 = "メンバー一覧:"+str(allhito)
-            m2 = "!match (メンバー)とかいてね！　空白はmatchの後にひとつだけ、メンバーは,で区切り"
+            m2 = "!match (メンバー)：メンバーに応じて自動で配置します。空白はmatchの後にひとつだけ、メンバーは,で区切り"
+            m3 = "!set (あなたの名前) (マップ名) (ポイント振り分け) ：A,MID,Bの「行きたい度」を設定します。"
+            m4 = "例：!set gya9 mirage 0,3,2"
+
             await client.send_message(message.channel, m1)
             await client.send_message(message.channel, m2)
+            await client.send_message(message.channel, m3)
+            await client.send_message(message.channel, m4)
 
     if message.content.startswith("!match"):
         if client.user != message.author:
             hito = message.content.split()[1]
             hitoset = set(hito.split(","))
 
-            # if not hitoset <= allhito:
-            #     error = "エラー：メンバーがおかしいです　入力にミスがあるかも"
+            if not hitoset <= allhito:
+                error = "エラー：メンバーがおかしいです　入力にミスがあるかも"
+                await client.send_message(message.channel, error)
 
-            cache = match_cache(hitoset)
-            mirage = match_mirage(hitoset)
+            else:
+                cache = match_cache(hitoset)
+                mirage = match_mirage(hitoset)
 
-            # await client.send_message(message.channel, error)
-            await client.send_message(message.channel, cache)
-            await client.send_message(message.channel, mirage)
+                await client.send_message(message.channel, cache)
+                await client.send_message(message.channel, mirage)
 
     if message.content.startswith("!set"):
         if client.user != message.author:
             split = message.content.split()
-            point = split[3].split(",")
+            point = [int (i) for i in split[3].split(",")]
 
-            df = pd.read_csv("point_"+ split[2] +".csv", index_col=0)
+            if sum(point) > 5:
+                em = "3つの数字の合計が5以下になるようにしてください！"
+                await client.send_message(message.channel, em)
 
-            df.at[split[1],"A"] = point[0]
-            df.at[split[1],"MID"] = point[1]
-            df.at[split[1],"B"] = point[2]
+            else:
+                df = pd.read_csv("point_"+ split[2] +".csv", index_col=0)
 
-            df.to_csv("point_"+ split[2] +".csv", encoding='utf-8')
+                df.at[split[1],"A"] = point[0]
+                df.at[split[1],"MID"] = point[1]
+                df.at[split[1],"B"] = point[2]
 
-            await client.send_message(message.channel, df)
+                df.to_csv("point_"+ split[2] +".csv", encoding='utf-8')
+                await client.send_message(message.channel, df)
+
 
 client.run(token_data_str)
