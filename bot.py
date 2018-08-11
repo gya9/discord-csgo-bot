@@ -1,6 +1,6 @@
 import discord
 import pandas as pd
-from matching import point_mirage, point_cache, match_mirage, match_cache
+from matching import match_mirage, match_cache
 from token_data import token_data_str
 
 client = discord.Client()
@@ -67,9 +67,8 @@ async def on_message(message):
             df.at[split[1],"MID"] = point[1]
             df.at[split[1],"B"] = point[2]
 
-            print(df)
-
             df.to_csv("point_"+ split[2] +".csv", encoding='utf-8')
 
+            await client.send_message(message.channel, df)
 
 client.run(token_data_str)

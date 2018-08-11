@@ -1,3 +1,5 @@
+import pandas as pd
+
 allhito = {
     "arch",
     "darknist",
@@ -9,39 +11,17 @@ allhito = {
     "bekutoru"
     }
 
-point_cache = {
-    "arch":[1,3,1],
-    "darknist":[5,0,0],
-    "3ple":[0,0,5],
-    "gya9":[1,3,1],
-    "keshigomu":[4,1,0],
-    "toka":[1,1,3],
-    "yukiya":[2,0,3],
-    "bekutoru":[1,2,1],
-    }
-
-point_mirage = {
-    "arch":[1,3,1],\
-    "darknist":[0,0,5],\
-    "3ple":[4,0,1],\
-    "gya9":[1,4,0],\
-    "keshigomu":[0,0,5],\
-    "toka":[3,0,2],\
-    "yukiya":[0,2,3],\
-    "bekutoru":[1,2,2],\
-    }
-
 def match_mirage(S):
     """mirageのマッチング関数。引数はset型"""
     SS = list(S)
     result = [[],[],[]]
-
+    df = pd.read_csv("point_mirage.csv", index_col=0)
     # print(SS)
 
     #mid決め
     highscore = -1
     for hito in SS:
-        tmp = point_mirage[hito][1]
+        tmp = df.at[hito,"MID"]
         if tmp > highscore:
             highscore = tmp
             ans = hito
@@ -53,7 +33,7 @@ def match_mirage(S):
     #A決め(1位)
     highscore = -1
     for hito in SS:
-        tmp = point_mirage[hito][0]
+        tmp = df.at[hito,"A"]
         if tmp > highscore:
             highscore = tmp
             ans = hito
@@ -65,7 +45,7 @@ def match_mirage(S):
     #B決め(1位)
     highscore = -1
     for hito in SS:
-        tmp = point_mirage[hito][2]
+        tmp = df.at[hito,"B"]
         if tmp > highscore:
             highscore = tmp
             ans = hito
@@ -77,7 +57,7 @@ def match_mirage(S):
     #A決め(2位)
     highscore = -1
     for hito in SS:
-        tmp = point_mirage[hito][0]
+        tmp = df.at[hito,"A"]
         if tmp > highscore:
             highscore = tmp
             ans = hito
@@ -97,13 +77,13 @@ def match_cache(S):
     """cacheのマッチング関数。引数はset型"""
     SS = list(S)
     result = [[],[],[]]
-
+    df = pd.read_csv("point_cache.csv", index_col=0)
     # print(SS)
 
     #mid決め
     highscore = -1
     for hito in SS:
-        tmp = point_cache[hito][1]
+        tmp = df.at[hito,"MID"]
         if tmp > highscore:
             highscore = tmp
             ans = hito
@@ -115,7 +95,7 @@ def match_cache(S):
     #A決め(1位)
     highscore = -1
     for hito in SS:
-        tmp = point_cache[hito][0]
+        tmp = df.at[hito,"A"]
         if tmp > highscore:
             highscore = tmp
             ans = hito
@@ -127,7 +107,7 @@ def match_cache(S):
     #B決め(1位)
     highscore = -1
     for hito in SS:
-        tmp = point_cache[hito][2]
+        tmp = df.at[hito,"B"]
         if tmp > highscore:
             highscore = tmp
             ans = hito
@@ -139,7 +119,7 @@ def match_cache(S):
     #A決め(2位)
     highscore = -1
     for hito in SS:
-        tmp = point_cache[hito][0]
+        tmp = df.at[hito,"A"]
         if tmp > highscore:
             highscore = tmp
             ans = hito
