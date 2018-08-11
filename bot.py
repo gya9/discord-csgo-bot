@@ -1,6 +1,6 @@
 import discord
 import pandas as pd
-from matching import match_mirage, match_cache
+from matching import match
 from token_data import token_data_str
 
 client = discord.Client()
@@ -56,19 +56,18 @@ async def on_message(message):
                 await client.send_message(message.channel, error)
 
             else:
-                cache = match_cache(hitoset)
-                mirage = match_mirage(hitoset)
-
-                await client.send_message(message.channel, cache)
-                await client.send_message(message.channel, mirage)
+                for ans_cache in match(hitoset,"cache"):
+                    await client.send_message(message.channel, ans_cache)
+                for ans_mirage in match(hitoset,"mirage"):
+                    await client.send_message(message.channel, ans_mirage)
 
     if message.content.startswith("!set"):
         if client.user != message.author:
             split = message.content.split()
             point = [int (i) for i in split[3].split(",")]
 
-            if sum(point) > 5:
-                em = "3つの数字の合計が5以下になるようにしてください！"
+            if sum(point) > 10:
+                em = "3つの数字の合計が10以下になるようにしてください！"
                 await client.send_message(message.channel, em)
 
             else:

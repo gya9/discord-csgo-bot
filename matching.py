@@ -1,4 +1,5 @@
 import pandas as pd
+import itertools
 
 allhito = {
     "arch",
@@ -11,77 +12,34 @@ allhito = {
     "bekutoru"
     }
 
-def choice(SS,df,pos):
-    """各ポジションについての最適プレイヤーを選択し、プレイヤー名を返す関数。
-       引数はプレイヤーのlist, ポイントのdataframe, 文字列pos("A", "MID", "B")"""
-    highscore = -1
-    for hito in SS:
-        tmp = df.at[hito, pos]
-        if tmp > highscore:
-            highscore = tmp
-            ans = hito
-    return(ans)
-
-def match_mirage(S):
-    """mirageのマッチング関数。引数はset型"""
-    SS = list(S)
-    result = [[],[],[]]
-    df = pd.read_csv("point_mirage.csv", index_col=0)
-
-    #mid決め
-    ans = choice(SS,df,"MID")
-    result[1].append(SS.pop(SS.index(ans)))
-
-    #A決め(1位)
-    ans = choice(SS,df,"A")
-    result[0].append(SS.pop(SS.index(ans)))
-
-    #B決め(1位)
-    ans = choice(SS,df,"B")
-    result[2].append(SS.pop(SS.index(ans)))
-
-    #A決め(2位)
-    ans = choice(SS,df,"A")
-    result[0].append(SS.pop(SS.index(ans)))
-
-    #B決め(2位)
-    result[2].append(SS.pop(0))
-
-    a = result[0]
-    mid = result[1]
-    b = result[2]
-
-    return("【mirage】A:" + str(a) + "  MID:" + str(mid) + "  B:" + str(b))
-
-
-def match_cache(S):
-    """cacheのマッチング関数。引数はset型"""
-    SS = list(S)
-    result = [[],[],[]]
-    df = pd.read_csv("point_cache.csv", index_col=0)
-
-    #mid決め
-    ans = choice(SS,df,"MID")
-    result[1].append(SS.pop(SS.index(ans)))
-
-    #A決め(1位)
-    ans = choice(SS,df,"A")
-    result[0].append(SS.pop(SS.index(ans)))
-
-    #B決め(1位)
-    ans = choice(SS,df,"B")
-    result[2].append(SS.pop(SS.index(ans)))
-
-    #A決め(2位)
-    ans = choice(SS,df,"A")
-    result[0].append(SS.pop(SS.index(ans)))
-
-    #B決め(2位)
-    result[2].append(SS.pop(0))
-
-    a = result[0]
-    mid = result[1]
-    b = result[2]
-
-    return("【cache】A:" + str(a) + "  MID:" + str(mid) + "  B:" + str(b))
-
+def match(S,map):
+    """マッチング関数。引数はメンバーのset:S、マップ名の文字列:map"""
+    hito = list(S)
+    df = pd.read_csv("point_" + map + ".csv", index_col=0)
+    highscore = 0
+    ans = []
+    ansstr = []
+    for x in hito: # MID選出
+        MID = [x]
+        left4 = hito[:]
+        left4.remove(x) # MID以外のメンバー4人のリストを作成
+        tot = list(itertools.combinations(left4,2)) # 残った4人中2人をAに
+        for a2 in tot: 
+            total = 0
+            a2 = list(a2)
+            b2 = list(set(left4) - set(a2)) # Aじゃない2人はBに
+            # print(a2,MID,b2)
+            for a_player in a2:
+                total += int(df.at[a_player, "A"])
+            total += int(df.at[MID[0], "MID"])
+            for b_player in b2:
+                total += int(df.at[b_player, "B"])
+            print(total)
+            if highscore < total:
+                highscore = total
+                ans = [[a2,MID,b2]]
+            elif highscore == total:
+                ans.append([a2,MID,b2])
+    for x in ans:
+        ansstr.append("【" + map + "】A:" + str(x[0]) + "  MID:" + str(x[1]) + "  B:" + str(x[2]))
+    return(ansstr)
