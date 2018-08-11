@@ -1,25 +1,34 @@
-allhito = {"arch", "darknist", "3ple", "gya9", "keshigomu", "toka", "yukiya", "bekutoru"}
+allhito = {
+    "arch",
+    "darknist",
+    "3ple",
+    "gya9",
+    "keshigomu",
+    "toka",
+    "yukiya",
+    "bekutoru"
+    }
 
 point_cache = {
-    "arch":[0,3,2],\
-    "darknist":[5,0,0],\
-    "3ple":[0,0,5],\
-    "gya9":[1,1,1],\
-    "keshigomu":[4,1,0],\
-    "toka":[1,1,1],\
-    "yukiya":[3,2,0],\
-    "bekutoru":[1,1,1],\
+    "arch":[1,3,1],
+    "darknist":[5,0,0],
+    "3ple":[0,0,5],
+    "gya9":[1,3,1],
+    "keshigomu":[4,1,0],
+    "toka":[1,1,3],
+    "yukiya":[2,0,3],
+    "bekutoru":[1,2,1],
     }
 
 point_mirage = {
-    "arch":[0,5,0],\
-    "darknist":[5,0,0],\
-    "3ple":[2,0,3],\
-    "gya9":[0,4,1],\
-    "keshigomu":[5,0,0],\
-    "toka":[2,0,3],\
-    "yukiya":[5,0,0],\
-    "bekutoru":[0,2,3],\
+    "arch":[1,3,1],\
+    "darknist":[0,0,5],\
+    "3ple":[4,0,1],\
+    "gya9":[1,4,0],\
+    "keshigomu":[0,0,5],\
+    "toka":[3,0,2],\
+    "yukiya":[0,2,3],\
+    "bekutoru":[1,2,2],\
     }
 
 def match_mirage(S):

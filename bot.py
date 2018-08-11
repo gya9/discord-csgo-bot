@@ -1,5 +1,7 @@
 import discord
 from matching import point_mirage, point_cache, match_mirage, match_cache
+from token import token_data
+
 client = discord.Client()
 
 @client.event
@@ -44,5 +46,4 @@ async def on_message(message):
             await client.send_message(message.channel, cache)
             await client.send_message(message.channel, mirage)
 
-
-client.run("NDc3MTUyMTI5MDIzMzQ0NjQw.Dk3-1A.Q0Gw2pQgXCEuiOxuEDKBNUZVszk")
+client.run(token_data)
