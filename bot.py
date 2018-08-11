@@ -1,6 +1,6 @@
 import discord
 from matching import point_mirage, point_cache, match_mirage, match_cache
-from token import token_data
+from token_data import token_data_str
 
 client = discord.Client()
 
@@ -46,4 +46,4 @@ async def on_message(message):
             await client.send_message(message.channel, cache)
             await client.send_message(message.channel, mirage)
 
-client.run(token_data)
+client.run(token_data_str)
