@@ -23,6 +23,8 @@ allhito = {
     "bekutoru"
     }
 
+maplist = {"cache", "mirage"}
+
 @client.event
 async def on_message(message):
     # 「おはよう」で始まるか調べる
@@ -32,6 +34,11 @@ async def on_message(message):
             # メッセージを書きます
             m = "おはようございます" + message.author.name + "さん！"
             # メッセージが送られてきたチャンネルへメッセージを送ります
+            await client.send_message(message.channel, m)
+
+    if message.content.startswith("おやすみ"):
+        if client.user != message.author:
+            m = "おやすみなさい、" + message.author.name + "さん！"
             await client.send_message(message.channel, m)
 
     if message.content.startswith("!help"):
@@ -70,9 +77,17 @@ async def on_message(message):
             split = message.content.split()
             point = [int (i) for i in split[3].split(",")]
 
-            if sum(point) > 10:
-                em = "3つの数字の合計が10以下になるようにしてください！"
-                await client.send_message(message.channel, em)
+            if split[1] not in allhito:
+                em1 = "未対応のプレイヤー名です" + allhito
+                await client.send_message(message.channel, em1)
+
+            elif split[2] not in maplist:
+                em2 = "未対応のマップ名です" + maplist
+                await client.send_message(message.channel, em2)
+
+            elif sum(point) > 10:
+                em3 = "3つの数字の合計が10以下になるようにしてください！"
+                await client.send_message(message.channel, em3)
 
             else:
                 df = pd.read_csv("point_"+ split[2] +".csv", index_col=0)
