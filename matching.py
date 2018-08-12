@@ -34,7 +34,7 @@ def match(S,map):
             total += int(df.at[MID[0], "MID"])
             for b_player in b2:
                 total += int(df.at[b_player, "B"])
-            print(total)
+            # print(total)
             if highscore < total:
                 highscore = total
                 ans = [[a2,MID,b2]]
