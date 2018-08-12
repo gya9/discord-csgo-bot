@@ -78,11 +78,11 @@ async def on_message(message):
             point = [int (i) for i in split[3].split(",")]
 
             if split[1] not in allhito:
-                em1 = "未対応のプレイヤー名です" + allhito
+                em1 = "未対応のプレイヤー名です" + str(allhito)
                 await client.send_message(message.channel, em1)
 
             elif split[2] not in maplist:
-                em2 = "未対応のマップ名です" + maplist
+                em2 = "未対応のマップ名です" + str(maplist)
                 await client.send_message(message.channel, em2)
 
             elif sum(point) > 10:
