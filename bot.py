@@ -51,8 +51,8 @@ async def on_message(message):
             hito = message.content.split()[1]
             hitoset = set(hito.split(","))
 
-            if len(hitoset) < 5:
-                error = "エラー：メンバーが足りていません　入力が被ってるかも"
+            if len(hitoset) != 5:
+                error = "エラー：メンバーの数がおかしいです"
                 await client.send_message(message.channel, error)
 
             elif not hitoset <= allhito:
