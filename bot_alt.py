@@ -196,6 +196,7 @@ async def on_message(message):
 
         if message.content.startswith("!match"):
             hito = message.mentions
+            print(hito)
 
             if len(hito) != 5:
                 error = "エラー：メンバーの数がおかしいです"
