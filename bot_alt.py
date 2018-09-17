@@ -201,13 +201,14 @@ async def on_message(message):
                 error = "エラー：メンバーの数がおかしいです"
                 await client.send_message(message.channel, error)
 
-            elif match(hito, Map) == "e1":
-                error = "登録されていないメンバーがいます。 「!add」 コマンドからどうぞ"
-                await client.send_message(message.channel, error)
-
             else:
                 posname = ["A: ","AMID: ","MID: ","B: ","B: "]
                 for Map in Maps:
+                    if match(hito, Map) == "e1":
+                        error = "登録されていないメンバーがいます。 「!add」 コマンドからどうぞ"
+                        await client.send_message(message.channel, error)
+                        break
+
                     for ans in match(hito, Map):
                         m = []
                         for i in range(5):
