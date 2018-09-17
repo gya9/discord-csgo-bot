@@ -38,7 +38,7 @@ async def on_message(message):
 
         if message.content.startswith("!help"):
             if "!add" in message.content:
-                m1 = "!add <@" + myid + "> 1,0,2,4,4"
+                m1 = "!add <@" + myid + ">"
                 m2 = "という風に入力してください"
                 m3 = "@欄には登録するプレイヤーが入ります"
 
