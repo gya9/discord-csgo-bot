@@ -1,3 +1,4 @@
+import discord
 import pandas as pd
 import itertools
 
