@@ -196,7 +196,7 @@ async def on_message(message):
 
         if message.content.startswith("!match"):
             hito = message.mentions
-            
+
             print(hito) #  あとでけす
             for i in range(5):
                 hito[i] = hito[i].id
@@ -214,6 +214,7 @@ async def on_message(message):
                         break
 
                     for ans in match(hito, Map):
+                        print(ans) #atode kesu
                         m = []
                         for i in range(5):
                             pos = posname[i]
