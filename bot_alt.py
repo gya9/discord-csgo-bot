@@ -1,3 +1,4 @@
+import sys
 import discord
 import pandas as pd
 from matching import match
@@ -197,10 +198,10 @@ async def on_message(message):
         if message.content.startswith("!match"):
             hito = message.mentions
 
-            print(hito) #  あとでけす
             for i in range(5):
                 hito[i] = hito[i].id
-            print(hito) #  あとでけす
+                hito[i] = "ID:" + str(hito[i])
+
             if len(hito) != 5:
                 error = "エラー：メンバーの数がおかしいです"
                 await client.send_message(message.channel, error)
@@ -213,14 +214,18 @@ async def on_message(message):
                         await client.send_message(message.channel, error)
                         break
 
+                    else:
+                        map1 = "【" + Map + "】"
+                        await client.send_message(message.channel, map1)
+
                     for ans in match(hito, Map):
-                        print(ans) #atode kesu
-                        # m = []
-                        # for i in range(5):
-                        #     pos = posname[i]
-                        #     at = "<@" + ans[i][3:] + ">　"
-                        #     m.append(pos + at)
-                        # mm = m[0] + m[1] + m[2] + m[3] + m[4]
-                        # await client.send_message(message.channel, mm)
+                        m = []
+                        for i in range(5):
+                            pos = posname[i]
+                            at = "<@" + ans[i][3:] + ">　"
+                            m.append(pos + at)
+                        mm = m[0] + m[1] + m[2] + m[3] + m[4]
+                        sys.stdout.flush()
+                        await client.send_message(message.channel, mm)
 
 client.run(token_data_str)
