@@ -215,12 +215,12 @@ async def on_message(message):
 
                     for ans in match(hito, Map):
                         print(ans) #atode kesu
-                        m = []
-                        for i in range(5):
-                            pos = posname[i]
-                            at = "<@" + ans[i][3:] + ">　"
-                            m.append(pos + at)
-                        mm = m[0] + m[1] + m[2] + m[3] + m[4]
-                        await client.send_message(message.channel, mm)
+                        # m = []
+                        # for i in range(5):
+                        #     pos = posname[i]
+                        #     at = "<@" + ans[i][3:] + ">　"
+                        #     m.append(pos + at)
+                        # mm = m[0] + m[1] + m[2] + m[3] + m[4]
+                        # await client.send_message(message.channel, mm)
 
 client.run(token_data_str)
