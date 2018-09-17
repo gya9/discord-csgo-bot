@@ -14,8 +14,8 @@ import itertools
 def match(S, Map):
     """マッチング関数。引数はmessage.mentions(list型)、マップ名の文字列"""
     for i in range(5):
-        # S[i] = "ID:" + str(S[i])
-        S[i] = "ID:" + S[i].id
+        S[i] = "ID:" + str(S[i])
+        # S[i] = "ID:" + S[i].id
     df = pd.read_csv("point_" + Map + ".csv", index_col=0)
 
     if not set(S) <= set(df.index.values):

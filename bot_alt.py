@@ -196,8 +196,11 @@ async def on_message(message):
 
         if message.content.startswith("!match"):
             hito = message.mentions
-            print(hito)
-
+            
+            print(hito) #  あとでけす
+            for i in range(5):
+                hito[i] = hito[i].id
+            print(hito) #  あとでけす
             if len(hito) != 5:
                 error = "エラー：メンバーの数がおかしいです"
                 await client.send_message(message.channel, error)
