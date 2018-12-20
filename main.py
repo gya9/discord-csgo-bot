@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from matching import match
 from keys import token_str, steamapi_key_str, gya9_id
-from func import get_steam_id, edit_id, get_lobby
+from func import get_steam_id, edit_id, get_lobby, checkid
 
 class MyClient(discord.Client):
     async def send2developer(self, msg):
@@ -39,15 +39,12 @@ class MyClient(discord.Client):
                     if flag == 1:
                         await message.channel.send(msg)
                     elif flag == 0:
-                        await self.get_channel(524617506992816138).send(msg)
+                        # await self.get_channel(524617506992816138).send(msg)
+                        await message.channel.send(msg)
 
                 if message.content.startswith("!checkid"):
-                    df = pd.read_csv("steamid.csv")
-                    searchid = np.int64(message.author.id)
-                    steam_id = df[df["discord_id"] == searchid]["steam_id"].iloc[0]
-
-                    m1 = "<@{}> さんの登録SteamID:{}".format(message.author.id, steam_id)
-                    await message.channel.send(m1)
+                    msg, flag = checkid(self, message)
+                    await message.channel.send(msg)
 
                 if message.content.startswith("!bye"):
                     m1 = "shutting down"

@@ -50,13 +50,13 @@ def edit_id(self,message):
     if s_bool.sum() == 1:
         df.loc[df["discord_id"] == searchid, "steam_id"] = steam_id
         df.to_csv("steamid.csv", encoding='utf-8')
-        m1 = "<@{}> さんのsteamidを更新しました".format(message.author.id)
+        m1 = "<@{}> さんのsteamidを更新しました。".format(message.author.id)
 
     else:
         s = pd.Series([message.author.id,steam_id], index=df.columns)
         df = df.append(s, ignore_index=True)
         df.to_csv("steamid.csv", encoding='utf-8')
-        m1 = "<@{}> さんのsteamidを登録しました".format(message.author.id)
+        m1 = "<@{}> さんのsteamidを登録しました。".format(message.author.id)
 
     return m1
 
@@ -85,16 +85,35 @@ def get_lobby(self,message):
         man = lists["response"]["players"][0]
 
     steam_name = man["personaname"]
+    game_name = man["gameextrainfo"]
+    game_id = man["gameid"]
+    steam_lobby_id = man["lobbysteamid"]
+
     try:
         steam_lobby_id = man["lobbysteamid"]
     except KeyError:
-        e1 = "エラー:CSGOロビーが立っていません。CSGO内で誰かをinviteするとロビーが生成されます"
+        e1 = "エラー:パブリックロビーが見つかりません。フレンド限定設定などを解除してください。"
         return e1,1
     else:
         if lobby_message != "" :
-            m1 = "{}さんが参加者を募集しています。「{}」".format(steam_name, lobby_message)
-        else:
-            m1 = "{}さんが参加者を募集しています。\r".format(steam_name) + \
-                 "steam://joinlobby/730/{}/{}".format(steam_lobby_id,steam_id)
+            m1 = "{}さんが{}の参加者を募集しています。「{}」\r".format(steam_name,game_name,lobby_message) + \
+                 "steam://joinlobby/{}/{}/{}".format(game_id,steam_lobby_id,steam_id)
 
+        else:
+            m1 = "{}さんが{}の参加者を募集しています。\r".format(steam_name,game_name) + \
+                 "steam://joinlobby/{}/{}/{}".format(game_id,steam_lobby_id,steam_id)
+
+        return m1,0
+
+
+def checkid(self,message):
+    df = pd.read_csv("steamid.csv")
+    searchid = np.int64(message.author.id)
+    try:
+        steam_id = df.loc[df["discord_id"] == searchid]["steam_id"].iloc[0]
+    except IndexError:
+        e1 = "そのIDは登録されていません\r!id (ここにsteamプロフィールURL またはsteamID)\rと入力するとIDが登録できます"
+        return e1,1
+    else:
+        m1 = "<@{}> さんの登録SteamID:{}".format(message.author.id, steam_id)
         return m1,0
